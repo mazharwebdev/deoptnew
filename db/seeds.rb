@@ -8,7 +8,7 @@
 
 Product.delete_all
 # . . .
-50.times do |n|
+3.times do |n|
   Product.create!(title: "Programming Ruby 1.9 & 2.0 - #{n+1}",
   description:
   %{<p>
