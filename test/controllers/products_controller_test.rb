@@ -7,7 +7,7 @@
 # Visit http://www.pragmaticprogrammer.com/titles/rails4 for more book information.
 #---
 require 'test_helper'
-class ProductsControllerTest < ActionController::TestCase
+class ProductsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @product = products(:one)
     @update = {
@@ -19,19 +19,21 @@ class ProductsControllerTest < ActionController::TestCase
   end
 
   test "should get index" do
-    get :index
+    # get :index
+    get "/products/new"
+
     assert_response :success
     assert_not_nil assigns(:products)
   end
 
   test "should get new" do
-    get :new
+    get "/products/new"
     assert_response :success
   end
 
   test "should create product" do
     assert_difference('Product.count') do
-      post :create, product: @update
+      post "/products", product: @update
     end
 
     assert_redirected_to product_path(assigns(:product))
@@ -40,17 +42,18 @@ class ProductsControllerTest < ActionController::TestCase
   # ...
 
   test "should show product" do
-    get :show, id: @product
+    # get :show, id: @product
+    get "/products/#{@product.id}"
     assert_response :success
   end
 
   test "should get edit" do
-    get :edit, id: @product
+    get "/edit", id: @product
     assert_response :success
   end
 
   test "should update product" do
-    patch :update, id: @product, product: @update
+    patch "/update/", id: @product
     assert_redirected_to product_path(assigns(:product))
   end
 
@@ -58,7 +61,7 @@ class ProductsControllerTest < ActionController::TestCase
 
   test "should destroy product" do
     assert_difference('Product.count', -1) do
-      delete :destroy, id: @product
+      delete "/products/#{@product.id}"
     end
 
     assert_redirected_to products_path
